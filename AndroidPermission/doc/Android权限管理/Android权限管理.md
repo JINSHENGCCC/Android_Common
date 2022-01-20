@@ -41,7 +41,7 @@ _注：从Android 6.0（Marshmallow，API 23）开始，用户可以在任何时
 
 **危险权限以及对应分组如下：**
 
-![][01]
+![](https://github.com/JINSHENGCCC/Android_Common/tree/master/AndroidPermission/doc/Android%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/pic/1.png)
 
 #### 3、特殊权限
 &#8195;&#8195;特殊权限与特定的应用操作相对应。只有平台和原始设备制造商 (OEM) 可以定义特殊权限。此外，如果平台和 OEM 想要防止有人执行功能特别强大的操作（例如通过其他应用绘图），通常会定义特殊权限。系统会为特殊权限分配“appop”保护级别。在Android 6.0以后，只有系统应用才能够使用这些特殊权限。
@@ -291,7 +291,7 @@ _注：不同手机系统对于权限处理方面可能存在差异，部分手�
     	 * @param requestCode
     	 * @param listener
     	 */
-    	public static void requestByGroupName(Activity context, String permissionGroupName,int 	requestCode,OnPermissionsListener listener){
+    	public static void requestByGroupName(Activity context, String permissionGroupName,int requestCode,OnPermissionsListener listener){
     	    requestByGroupName(context, new String[]{permissionGroupName}, requestCode, listener);
     	}
 	
@@ -302,7 +302,7 @@ _注：不同手机系统对于权限处理方面可能存在差异，部分手�
     	 * @param requestCode 请求码
     	 * @param listener 回调接口
     	 */
-    	public static void requestByGroupName(Activity context, String[] pgNameArray,int 	requestCode,OnPermissionsListener listener){
+    	public static void requestByGroupName(Activity context, String[] pgNameArray,int requestCode,OnPermissionsListener listener){
     	    showLog("requestByPermissionGroup");
     	    try{
     	        //如果操作系统SDK级别在23之上（android6.0），就进行动态权限申请
@@ -354,7 +354,7 @@ _注：不同手机系统对于权限处理方面可能存在差异，部分手�
     	 * @param requestCode
     	 * @param listener
     	 */
-    	public static void requestByPermissionName(Activity context, String permission,int 	requestCode,OnPermissionsListener listener){
+    	public static void requestByPermissionName(Activity context, String permission,int requestCode,OnPermissionsListener listener){
     	    requestByPermissionName(context, new String[]{permission}, requestCode, listener);
     	}
 
@@ -365,7 +365,7 @@ _注：不同手机系统对于权限处理方面可能存在差异，部分手�
     	 * @param requestCode 请求码
     	 * @param listener 回调接口
     	 */
-    	public static void requestByPermissionName(Activity context, String[] permissionArray,int 	requestCode,OnPermissionsListener listener){
+    	public static void requestByPermissionName(Activity context, String[] permissionArray,int requestCode,OnPermissionsListener listener){
     	    showLog("requestPermissions");
     	    try{
     	        //如果操作系统SDK级别在23之上（android6.0），就进行动态权限申请
@@ -404,7 +404,7 @@ _注：不同手机系统对于权限处理方面可能存在差异，部分手�
     	 * @param listener 回调接口
     	 * @param controlFlag 控制标识，用于判断当响应禁止列表后，是否继续处理可再申请列表(避免出现同时处理禁止列表和可再申请列表，互相干扰，比如弹出两个提示框)
     	 */
-    	public static void onRequestPermissionsResult(Activity context,String[] permissions, int[] 	grantResults,OnPermissionsListener listener,boolean controlFlag) {
+    	public static void onRequestPermissionsResult(Activity context,String[] permissions, int[] grantResults,OnPermissionsListener listener,boolean controlFlag) {
     	    try{
     	        ArrayList<String> requestList=new ArrayList<>();//可再申请列表
     	        ArrayList<String> banList=new ArrayList<>();//禁止列表
