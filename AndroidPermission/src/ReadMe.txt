@@ -1,0 +1,2 @@
+1、PermissionDemo工程用于演示Android权限动态申请的流程。
+2、PermissionApp工程用于演示封装的PermissionUtil工具类如何使用。
