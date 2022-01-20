@@ -41,7 +41,7 @@ _注：从Android 6.0（Marshmallow，API 23）开始，用户可以在任何时
 
 **危险权限以及对应分组如下：**
 
-![](https://github.com/JINSHENGCCC/Android_Common/tree/master/AndroidPermission/doc/Android%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/pic/1.png)
+![][01]
 
 #### 3、特殊权限
 &#8195;&#8195;特殊权限与特定的应用操作相对应。只有平台和原始设备制造商 (OEM) 可以定义特殊权限。此外，如果平台和 OEM 想要防止有人执行功能特别强大的操作（例如通过其他应用绘图），通常会定义特殊权限。系统会为特殊权限分配“appop”保护级别。在Android 6.0以后，只有系统应用才能够使用这些特殊权限。
@@ -665,7 +665,7 @@ GitHub地址：[https://github.com/JINSHENGCCC/Android_Common/tree/master/Androi
 
 
 
-[01]: ./pic/1.png  
+[01]: ./pic/1.png?raw=true  
 
 
 
