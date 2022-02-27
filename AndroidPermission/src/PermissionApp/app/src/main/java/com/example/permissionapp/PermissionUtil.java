@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.ArraySet;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
@@ -13,7 +14,9 @@ import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * author:chenjs
@@ -65,6 +68,7 @@ public class PermissionUtil {
             Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     private static Map<String,String[]> m_PermissionGroupList=null;
+    private static Map<String,String> m_PermissionsMappingList=null;
     static{
         initMap();
     }
@@ -309,6 +313,30 @@ public class PermissionUtil {
         return null;
     }
 
+    /**
+     * 获得传入的权限名列表对应的中文名称
+     * @param permissionList 权限名列表
+     * @return 集合
+     */
+    public static Set<String> getPermissionsNameByChinese(String[] permissionList){
+        try{
+            if(permissionList!=null){
+                HashSet<String> nameSet=new HashSet<>();//确保集合元素不重复
+                String tmpName;
+                for(String strPermission : permissionList){
+                    tmpName=m_PermissionsMappingList.get(strPermission);
+                    if(tmpName!=null){
+                        nameSet.add(tmpName);
+                    }
+                }
+                return nameSet;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private static void initMap(){
         if(m_PermissionGroupList==null){
             m_PermissionGroupList=new HashMap<>();
@@ -321,6 +349,46 @@ public class PermissionUtil {
             m_PermissionGroupList.put(Manifest.permission_group.SENSORS,Group_Sensors);
             m_PermissionGroupList.put(Manifest.permission_group.SMS,Group_Sms);
             m_PermissionGroupList.put(Manifest.permission_group.STORAGE,Group_Storage);
+        }
+
+        if(m_PermissionsMappingList==null){
+            m_PermissionsMappingList=new HashMap<>();
+            //日历
+            for(String strPermission : Group_Calendar){
+                m_PermissionsMappingList.put(strPermission,"日历");
+            }
+            //照相机
+            for(String strPermission : Group_Camera){
+                m_PermissionsMappingList.put(strPermission,"摄像头");
+            }
+            //通讯录
+            for(String strPermission : Group_Contacts){
+                m_PermissionsMappingList.put(strPermission,"通讯录");
+            }
+            //定位
+            for(String strPermission : Group_Location){
+                m_PermissionsMappingList.put(strPermission,"位置");
+            }
+            //麦克风
+            for(String strPermission : Group_Microphone){
+                m_PermissionsMappingList.put(strPermission,"麦克风");
+            }
+            //电话
+            for(String strPermission : Group_Phone){
+                m_PermissionsMappingList.put(strPermission,"电话");
+            }
+            //传感器
+            for(String strPermission : Group_Sensors){
+                m_PermissionsMappingList.put(strPermission,"传感器");
+            }
+            //短信
+            for(String strPermission : Group_Sms){
+                m_PermissionsMappingList.put(strPermission,"短信");
+            }
+            //存储
+            for(String strPermission : Group_Storage){
+                m_PermissionsMappingList.put(strPermission,"存储");
+            }
         }
     }
 

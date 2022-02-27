@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG="PermissionApp";
@@ -176,18 +177,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onPermissionsForbidden(String[] permissions, int[] grantResults, ArrayList<String> pmList) {
             showTip("以下权限被禁止："+pmList.toString());
-            AlertDialog dialog = new AlertDialog.Builder(mContext)
-                    .setTitle("警告")
-                    .setMessage("请前往设置中手动打开摄像头权限，否则功能无法正常运行！")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // 一般情况下如果用户不授权的话，功能是无法运行的，做退出处理
-                            finish();
-                        }
-                    })
-                    .create();
-            dialog.show();
+            Set<String> nameSet=PermissionUtil.getPermissionsNameByChinese(pmList.toArray(new String[0]));
+            if(nameSet!=null){
+                AlertDialog dialog = new AlertDialog.Builder(mContext)
+                        .setTitle("警告")
+                        .setMessage("请前往设置中手动打开"+nameSet.toString()+"权限，否则功能无法正常运行！")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 一般情况下如果用户不授权的话，功能是无法运行的，做退出处理
+                                finish();
+                            }
+                        })
+                        .create();
+                dialog.show();
+            }
         }
 
         @Override
@@ -222,20 +226,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onPermissionsDenied(String[] permissions, int[] grantResults, ArrayList<String> pmList) {
             showTip("以下权限被拒绝授权："+pmList.toString());
-            //重新请求权限
-            AlertDialog dialog = new AlertDialog.Builder(mContext)
-                    .setTitle("提示")
-                    .setMessage(pmList.toString()+"权限为应用必要权限，请授权")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String[] sList=pmList.toArray(new String[0]);
-                            //重新申请权限,通过权限名的方式申请多组权限
-                            PermissionUtil.requestByPermissionName(mContext,sList, RequestCode2_1,mListener2_1);
-                        }
-                    })
-                    .create();
-            dialog.show();
+            Set<String> nameSet=PermissionUtil.getPermissionsNameByChinese(pmList.toArray(new String[0]));
+            if(nameSet!=null){
+                //重新请求权限
+                AlertDialog dialog = new AlertDialog.Builder(mContext)
+                        .setTitle("提示")
+                        .setMessage(nameSet.toString()+"权限为应用必要权限，请授权")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String[] sList=pmList.toArray(new String[0]);
+                                //重新申请权限,通过权限名的方式申请多组权限
+                                PermissionUtil.requestByPermissionName(mContext,sList, RequestCode2_1,mListener2_1);
+                            }
+                        })
+                        .create();
+                dialog.show();
+            }
         }
 
         @Override
@@ -260,36 +267,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onPermissionsForbidden(String[] permissions, int[] grantResults, ArrayList<String> pmList) {
             showTip("以下权限被禁止："+pmList.toString());
-            AlertDialog dialog = new AlertDialog.Builder(mContext)
-                    .setTitle("警告")
-                    .setMessage("请前往设置中手动打开"+pmList.toString()+"权限！")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+            Set<String> nameSet=PermissionUtil.getPermissionsNameByChinese(pmList.toArray(new String[0]));
+            if(nameSet!=null){
+                AlertDialog dialog = new AlertDialog.Builder(mContext)
+                        .setTitle("警告")
+                        .setMessage("请前往设置中手动打开"+nameSet.toString()+"权限！")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    })
-                    .create();
-            dialog.show();
+                            }
+                        })
+                        .create();
+                dialog.show();
+            }
         }
 
         @Override
         public void onPermissionsDenied(String[] permissions, int[] grantResults, ArrayList<String> pmList) {
             showTip("以下权限被拒绝授权："+pmList.toString());
-            //重新请求权限
-            AlertDialog dialog = new AlertDialog.Builder(mContext)
-                    .setTitle("提示")
-                    .setMessage("【"+pmList.toString()+"】权限为应用必要权限，请授权")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String[] sList=pmList.toArray(new String[0]);
-                            //重新申请权限,通过权限名的方式申请多组权限
-                            PermissionUtil.requestByPermissionName(mContext,sList, RequestCode2_2,mListener2_2);
-                        }
-                    })
-                    .create();
-            dialog.show();
+            Set<String> nameSet=PermissionUtil.getPermissionsNameByChinese(pmList.toArray(new String[0]));
+            if(nameSet!=null){
+                //重新请求权限
+                AlertDialog dialog = new AlertDialog.Builder(mContext)
+                        .setTitle("提示")
+                        .setMessage(nameSet.toString()+"权限为应用必要权限，请授权")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String[] sList=pmList.toArray(new String[0]);
+                                //重新申请权限,通过权限名的方式申请多组权限
+                                PermissionUtil.requestByPermissionName(mContext,sList, RequestCode2_2,mListener2_2);
+                            }
+                        })
+                        .create();
+                dialog.show();
+            }
         }
 
         @Override
@@ -319,36 +332,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onPermissionsForbidden(String[] permissions, int[] grantResults, ArrayList<String> pmList) {
             showTip("以下权限被禁止："+pmList.toString());
-            AlertDialog dialog = new AlertDialog.Builder(mContext)
-                    .setTitle("警告")
-                    .setMessage("请前往设置中手动打开"+pmList.toString()+"权限！")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+            Set<String> nameSet=PermissionUtil.getPermissionsNameByChinese(pmList.toArray(new String[0]));
+            if(nameSet!=null){
+                AlertDialog dialog = new AlertDialog.Builder(mContext)
+                        .setTitle("警告")
+                        .setMessage("请前往设置中手动打开"+nameSet.toString()+"权限！")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    })
-                    .create();
-            dialog.show();
+                            }
+                        })
+                        .create();
+                dialog.show();
+            }
         }
 
         @Override
         public void onPermissionsDenied(String[] permissions, int[] grantResults, ArrayList<String> pmList) {
             showTip("以下权限被拒绝授权："+pmList.toString());
-            //重新请求权限
-            AlertDialog dialog = new AlertDialog.Builder(mContext)
-                    .setTitle("提示")
-                    .setMessage("【"+pmList.toString()+"】权限为应用必要权限，请授权")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String[] sList=pmList.toArray(new String[0]);
-                            //重新申请权限,通过权限名的方式申请多组权限
-                            PermissionUtil.requestByPermissionName(mContext,sList, RequestCode3_1,mListener3_1);
-                        }
-                    })
-                    .create();
-            dialog.show();
+            Set<String> nameSet=PermissionUtil.getPermissionsNameByChinese(pmList.toArray(new String[0]));
+            if(nameSet!=null){
+                //重新请求权限
+                AlertDialog dialog = new AlertDialog.Builder(mContext)
+                        .setTitle("提示")
+                        .setMessage(nameSet.toString()+"权限为应用必要权限，请授权")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String[] sList=pmList.toArray(new String[0]);
+                                //重新申请权限,通过权限名的方式申请多组权限
+                                PermissionUtil.requestByPermissionName(mContext,sList, RequestCode3_1,mListener3_1);
+                            }
+                        })
+                        .create();
+                dialog.show();
+            }
         }
 
         @Override
