@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Android经典蓝牙开发文档</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h2>一、基本介绍</h2>
+<p>&#8195;&#8195;所谓蓝牙(Bluetooth)技术，实际上是一种短距离无线电技术，最初是由爱立信公司公司发明的。技术始于爱立信公司 1994 方案，它是研究在移动电话和其他配件间进行低功耗、低成本无线通信连接的方法。发明者希望为设备间的通讯创造一组统一规则（标准化协议）用来解决用户间相互不兼容的移动电子设备。<br />
+&#8195;&#8195;1998年5月20日，索尼以立信、国际商业机器、英特尔、诺基亚及东芝公司等业界龙头创立“特别兴趣小组”（Special Interest Group SIG），即蓝牙技术联盟的前身，目标是开发一个成本低、效益高、可以在短距离范围内随意无线连接的蓝牙技术标准,是负责蓝牙规范的制定和推广的国际组织。  </p>
+<p><img src="./pic/1.png" /></p>
+<p>&#8195;&#8195;蓝牙发展至今经历了多个版本的更新，1.1、1.2、2.0、2.1、3.0、4.0、4.1、4.2、5.0等。其中，将1.x~3.0之间的版本称之为经典蓝牙，4.x开始的蓝牙称之为低功耗蓝牙，也就是蓝牙ble。根据应用、协议类型等，可以对蓝牙进行以下分类：    </p>
+<p><img src="./pic/2.png" /></p>
+<p><br/></p>
+<h2>二、经典蓝牙API介绍</h2>
+<p>&#8195;&#8195;Android平台包含蓝牙网络堆栈支持，此支持能让设备以无线方式与其他蓝牙设备交换数据。应用框架提供通过Android Bluetooth API访问蓝牙功能的权限。这些API允许应用以无线方式连接到其他蓝牙设备，从而实现点到点和多点无线功能。Android应用可通过Bluetooth API执行以下操作：</p>
+<ul>
+<li>扫描其他蓝牙设备</li>
+<li>查询本地蓝牙适配器的配对蓝牙设备</li>
+<li>建立 RFCOMM 通道</li>
+<li>通过服务发现连接到其他设备</li>
+<li>与其他设备进行双向数据传输</li>
+<li>管理多个连接</li>
+</ul>
+<p>以下对经典蓝牙开发相关的API进行介绍：</p>
+<h4>1、BluetoothAdapter类</h4>
+<p>&#8195;&#8195;BluetoothAdapter代表了移动设备的本地的蓝牙适配器, 通过该蓝牙适配器可以对蓝牙进行基本操作, 例如 : 启动设备发现，获取已配对设备，通过mac蓝牙地址获取蓝牙设备等。</p>
+<h4>（1）获取本地蓝牙适配器实例</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取本地蓝牙适配器实例
+ * 参数：
+ *  无
+ * 返回：
+ *  如果设备具备蓝牙功能，返回BluetoothAdapter 实例；否则，返回null对象。
+ */
+public static synchronized BluetoothAdapter getDefaultAdapter();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、获取默认本地蓝牙适配器的句柄。目前Android仅支持一个蓝牙适配器，但该API可以扩展为支持更多。  
+</p>
+</blockquote>
+<h4>（2）打开蓝牙</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  打开蓝牙
+ * 参数：
+ *  无
+ * 返回：
+ *  如果蓝牙开始打开，则返回true；如果蓝牙打开发生问题，则返回false。
+ */
+public boolean enable();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH_ADMIN权限。<br />
+2、该方法将不经过用户同意，直接启用底层蓝牙硬件，并启动所有蓝牙系统服务。由于不同Android设备系统的实现不同，所以部分Android系统在调用该方法时也会弹框请求用户同意。<br />
+3、打开蓝牙，还可以通过调用startActivityForResult方法，使用ACTION_REQUEST_ENABLE意图来实现，此方法将弹出对话框，请求允许打开蓝牙。可以在Activity中的onActivityResult()方法中处理操作结果。<br />
+4、该方法是一个异步调用：它将立即返回结果。如果此调用返回true，则适配器状态将立即从STATE_OFF转换为STATE_TURNING_ON，并且稍后过渡到STATE_OFF或STATE_ON 。如果此调用返回false，则说明出现问题阻止适配器开启，例如设备处于飞行模式，或者蓝牙已打开。因此还应当监听ACTION_STATE_CHANGED广播，以跟踪后续蓝牙状态更改。  
+</p>
+</blockquote>
+<h4>（3）关闭蓝牙</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  关闭蓝牙
+ * 参数：
+ *  无
+ * 返回：
+ *  如果蓝牙开始关闭，则返回true；如果蓝牙关闭发生问题，则返回false。
+ */
+public boolean disable();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH_ADMIN权限。<br />
+2、该方法将不经过用户同意，关闭所有蓝牙连接，停止蓝牙系统服务并关闭底层蓝牙硬件。由于不同Android设备系统的实现不同，所以部分Android系统在调用该方法时也会弹框请求用户同意。<br />
+3、该方法是一个异步调用：它将立即返回结果。如果此调用返回true，则适配器状态将立即从STATE_ON转换为STATE_TURNING_OFF，并且稍后过渡到STATE_OFF或STATE_ON 。如果此调用返回false，则说明出现问题阻止适配器关闭，例如适配器已关闭。因此还应当监听ACTION_STATE_CHANGED广播，以跟踪后续蓝牙状态更改。  
+</p>
+</blockquote>
+<h4>（4）验证蓝牙MAC地址</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  验证蓝牙设备MAC地址是否有效。
+ * 参数：
+ *  address：蓝牙MAC地址，字母必须大写，例如：&quot;00:43:A8:23:10:F1&quot;。
+ * 返回：
+ *  如果蓝牙MAC地址有效，则返回true；否则返回false。
+ */
+public static boolean checkBluetoothAddress(String address);
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>无  
+</p>
+</blockquote>
+<h4>（5）获取本地蓝牙MAC地址</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取本地蓝牙适配器的硬件地址（MAC地址）
+ * 参数：
+ *  无
+ * 返回：
+ *  本地的硬件地址，例如：&quot;00:11:22:AA:BB:CC&quot;。
+ */
+public String getAddress();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH权限。  
+</p>
+</blockquote>
+<h4>（6）获取蓝牙绑定列表</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取与本机蓝牙所有绑定的远程蓝牙信息。
+ * 参数：
+ *  无
+ * 返回：
+ *  将本地蓝牙适配器绑定的一组BluetoothDevice对象返回。若出现错误返回null。
+ */
+public Set&lt;BluetoothDevice&gt; getBondedDevices();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH权限。<br />
+2、若蓝牙未打开，将返回空集。  
+</p>
+</blockquote>
+<h4>（7）获取蓝牙名称</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取本地蓝牙适配器的蓝牙名称。
+ * 参数：
+ *  无
+ * 返回：
+ *  本地蓝牙名称。若出现错误，返回null。
+ */
+public String getName();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH权限。  
+</p>
+</blockquote>
+<h4>（8）设置蓝牙名称</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  设置本地蓝牙适配器的蓝牙名称。
+ * 参数：
+ *  name：蓝牙名称。
+ * 返回：
+ *  设置成功返回true，否则返回false。
+ */
+public boolean setName(String name);
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH_ADMIN权限。<br />
+2、如果蓝牙未打开，该方法将返回false。<br />
+3、尽管许多远程设备只能显示前40个字符，而有些可能仅限于20个，但有效的蓝牙名称最多使用UTF-8编码为248个字节。  
+</p>
+</blockquote>
+<h4>（9）获取蓝牙扫描模式</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取本地蓝牙适配器的当前蓝牙扫描模式。
+ * 参数：
+ *  无
+ * 返回：
+ *  当前蓝牙适配器的蓝牙扫描模式。
+ */
+public int getScanMode();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH权限。<br />
+2、蓝牙扫描模式确定本地蓝牙适配器是否可被远程蓝牙设备连接和发现。<br />
+3、如果蓝牙未打开，此方法将返回SCAN_MODE_NONE。  
+</p>
+</blockquote>
+<p>蓝牙扫描模式： </p>
+<table>
+<thead>
+<tr>
+	<th>名称</th>
+	<th>值(int)</th>
+	<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>SCAN_MODE_NONE</td>
+	<td>20</td>
+	<td>该设备不能扫描以及被扫描。</td>
+</tr>
+<tr>
+	<td>SCAN_MODE_CONNECTABLE</td>
+	<td>21</td>
+	<td>该设备可以扫描其他蓝牙设备。</td>
+</tr>
+<tr>
+	<td>SCAN_MODE_CONNECTABLE_DISCOVERABLE</td>
+	<td>23</td>
+	<td>该设备既可以扫描其他设备，也可以被其他设备扫描发现。</td>
+</tr>
+</tbody>
+</table>
+<h4>（10）获取蓝牙适配器状态</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取本地蓝牙适配器的当前状态。
+ * 参数：
+ *  无
+ * 返回：
+ *  当前蓝牙适配器状态。
+ */
+public int getState();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH权限。  
+</p>
+</blockquote>
+<p>蓝牙适配器状态：</p>
+<table>
+<thead>
+<tr>
+	<th>名称</th>
+	<th>值(int)</th>
+	<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>STATE_OFF</td>
+	<td>10</td>
+	<td>表示本地蓝牙适配器已关闭</td>
+</tr>
+<tr>
+	<td>STATE_TURNING_ON</td>
+	<td>11</td>
+	<td>表示本地蓝牙适配器正在打开</td>
+</tr>
+<tr>
+	<td>STATE_ON</td>
+	<td>12</td>
+	<td>表示本地蓝牙适配器已开启，并可供使用</td>
+</tr>
+<tr>
+	<td>STATE_TURNING_OFF</td>
+	<td>13</td>
+	<td>表示本地蓝牙适配器正在关闭</td>
+</tr>
+</tbody>
+</table>
+<h4>（11）蓝牙是否打开</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  判断当前蓝牙适配器是否打开
+ * 参数：
+ *  无
+ * 返回：
+ *  若蓝牙为打开状态，则返回true，否则返回false。
+ */
+public boolean isEnabled();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH权限。<br />
+2、如果蓝牙正处于打开状态并可用，则返回true值，getState()==STATE_ON 等价。  
+</p>
+</blockquote>
+<h4>（12）蓝牙是否正在扫描</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  判断蓝牙适配器是否正在处于扫描过程中。
+ * 参数：
+ *  无
+ * 返回：
+ *  若蓝牙处于扫描状态，则返回true；否则返回false。
+ */
+public boolean isDiscovering();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH权限。<br />
+2、若蓝牙未打开，该方法将返回false。<br />
+3、扫描设备是一个重量级过程，不应在扫描时尝试建立连接，而此时已存在的蓝牙连接将获得有限制的带宽以及高延迟。  
+</p>
+</blockquote>
+<h4>（13）启动扫描</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  开始扫描周边蓝牙设备。
+ * 参数：
+ *  无
+ * 返回：
+ *  若启动成功，返回true；否则返回false。
+ */
+public boolean startDiscovery();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH_ADMIN权限。<br />
+2、通常为12秒左右的查询扫描过程。<br />
+3、这是一个异步调用，它会立即返回。注册ACTION_DISCOVERY_STARTED和ACTION_DISCOVERY_FINISHED广播以确定发现何时开始和完成的确切时间。注册ACTION_FOUND以便在发现远程蓝牙设备时收到通知。<br />
+4、若蓝牙未打开，该方法将返回false。<br />
+5、扫描设备是一个重量级过程，不应在扫描时尝试建立连接，而此时已存在的蓝牙连接将获得有限制的带宽以及高延迟。可以使用cancelDiscovery()取消扫描操作。  
+</p>
+</blockquote>
+<h4>（14）取消扫描</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  取消蓝牙搜索操作
+ * 参数：
+ *  无
+ * 返回：
+ *  如果取消成功, 则返回true; 如果取消失败, 返回false。
+ */
+public boolean cancelDiscovery()
+</code></pre>
+
+<blockquote>
+<p>1、需要 BLUETOOTH_ADMIN权限。<br />
+2、若蓝牙未打开，该方法将返回false。<br />
+3、因为蓝牙搜索是一个重量级过程，会耗费大量资源，所以在连接远程蓝牙设备前，必须调用这个方法，取消搜索。  
+</p>
+</blockquote>
+<h4>（15）获取远程蓝牙设备</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取给定蓝牙硬件地址的BluetoothDevice对象。
+ * 参数：
+ *  address：蓝牙MAC地址，字母必须大写，例如：&quot;00:43:A8:23:10:F1&quot;。
+ * 返回：
+ *  指定的远程蓝牙设备。
+ */
+public BluetoothDevice getRemoteDevice(String address);
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、如果MAC无效无效，将抛出IllegalArgumentException异常。  
+</p>
+</blockquote>
+<h4>（16）创建不安全的蓝牙服务套接字</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  创建一个正在监听的不安全的带有服务记录的无线射频通信（RFCOMM）蓝牙端口。
+ * 参数：
+ *  name：SDP记录下的服务器名，可以是任意字符串。
+ *  uuid：SDP记录下的UUID。
+ * 返回：
+ *  BluetoothServerSocket对象。
+ */
+public BluetoothServerSocket listenUsingInsecureRfcommWithServiceRecord(String name, UUID uuid);
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH权限。<br />
+2、系统将分配一个未使用的RFCOMM通道进行侦听。<br />
+3、当发生错误时，例如蓝牙不可用、权限不足、通道被占用等，将抛出IOException异常。<br />
+4、通过此方式创建的蓝牙服务套接字是不安全的，连接时不需要进行配对。  
+</p>
+</blockquote>
+<h4>（17）创建安全的蓝牙服务套接字</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  创建一个正在监听的安全的带有服务记录的无线射频通信（RFCOMM）蓝牙端口。
+ * 参数：
+ *  name：SDP记录下的服务器名，可以是任意字符串。
+ *  uuid：SDP记录下的UUID。
+ * 返回：
+ *  BluetoothServerSocket对象。
+ */
+public BluetoothServerSocket listenUsingRfcommWithServiceRecord(String name, UUID uuid);
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要 BLUETOOTH权限。<br />
+2、系统将分配一个未使用的RFCOMM通道进行侦听。<br />
+3、当发生错误时，例如蓝牙不可用、权限不足、通道被占用等，将抛出IOException异常。<br />
+4、通过此方式创建的蓝牙服务套接字是安全的，连接时需要进行配对。  
+</p>
+</blockquote>
+<p><br/></p>
+<h4>2、BluetoothDevice类</h4>
+<p>&#8195;&#8195;BluetoothDevice对象代表了一个远程的蓝牙设备, 通过这个类可以查询远程设备的物理地址, 名称, 连接状态等信息。这个类实际上只是一个蓝牙硬件地址的简单包装，这个类的对象是不可变的。对这个类的操作, 会执行在远程蓝牙设备的硬件上。</p>
+<h4>（1）获取蓝牙名称</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取远程蓝牙设备的蓝牙名称。
+ * 参数：
+ *  无
+ * 返回：
+ *  成功则返回蓝牙名称，若出现问题则返回null。
+ */
+public String getName();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要BLUETOOTH权限。<br />
+2、执行设备扫描时，本地适配器将自动检索远程名称，并将缓存它们。此方法仅从缓存中返回此设备的名称。  
+</p>
+</blockquote>
+<h4>（2）获取蓝牙MAC</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取远程蓝牙设备的硬件地址
+ * 参数：
+ *  无
+ * 返回：
+ *  蓝牙硬件地址
+ */
+public String getAddress();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>无  
+</p>
+</blockquote>
+<h4>（3）获取蓝牙绑定状态</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取远程蓝牙设备的绑定状态
+ * 参数：
+ *  无
+ * 返回：
+ *  蓝牙绑定状态
+ */
+public int getBondState();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要BLUETOOTH权限。  
+</p>
+</blockquote>
+<p>蓝牙绑定状态：</p>
+<table>
+<thead>
+<tr>
+	<th>名称</th>
+	<th>值(int)</th>
+	<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>BOND_NONE</td>
+	<td>10</td>
+	<td>远程设备未绑定。</td>
+</tr>
+<tr>
+	<td>BOND_BONDING</td>
+	<td>11</td>
+	<td>正在与远程设备进行绑定。</td>
+</tr>
+<tr>
+	<td>BOND_BONDED</td>
+	<td>12</td>
+	<td>远程设备已绑定。</td>
+</tr>
+</tbody>
+</table>
+<h4>（4）绑定远程设备</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  开始与远程蓝牙设备的绑定过程。
+ * 参数：
+ *  无
+ * 返回：
+ *  若成功开始绑定则返回true，否则返回false。
+ */
+public boolean createBond();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要BLUETOOTH_ADMIN权限。<br />
+2、这是一个异步调用，它会立即返回。注册监听ACTION_BOND_STATE_CHANGED广播，当绑定过程完成时及时获取其结果通知。<br />
+3、Android系统服务将处理必要的用户交互以确认并完成绑定过程。  
+</p>
+</blockquote>
+<h4>（5）创建不安全的蓝牙套接字</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  创建不安全的蓝牙套接字。
+ * 参数：
+ *  uuid：用于查找RFCOMM通道的服务记录UUID
+ * 返回：
+ *  一个准备好外界连接的RFCOMM蓝牙服务端口
+ */
+public BluetoothSocket createInsecureRfcommSocketToServiceRecord(UUID uuid);
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要BLUETOOTH权限。<br />
+2、通信渠道将不会有认证的链接密钥，即它将受到中间人攻击。<br />
+3、对于蓝牙 2.1 设备，链接将被加密，因为加密是强制性的。对于旧设备（蓝牙 2.1 之前的设备），链接不会被加密。<br />
+4、它旨在与listenUsingInsecureRfcommWithServiceRecord(String, UUID)用于对等蓝牙应用。<br />
+5、出现错误时，例如蓝牙不可用、权限不足，将抛出IOException异常。  
+</p>
+</blockquote>
+<h4>（6）创建安全的蓝牙套接字</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  创建安全的蓝牙套接字。
+ * 参数：
+ *  uuid：用于查找RFCOMM通道的服务记录UUID
+ * 返回：
+ *  一个准备好外界连接的RFCOMM蓝牙服务端口
+ */
+public BluetoothSocket createRfcommSocketToServiceRecord(UUID uuid);
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、需要BLUETOOTH权限。<br />
+2、只有经过身份验证的套接字链接才可以使用此套接字。认证是指认证链路密钥，以防止中间人攻击。<br />
+3、此套接字上的通信将被加密。<br />
+4、这是为与对等蓝牙应用程序 listenUsingRfcommWithServiceRecord(String, UUID)配合使用而设计的。<br />
+5、出现错误时，例如蓝牙不可用、权限不足，将抛出IOException异常。  
+</p>
+</blockquote>
+<p><br/></p>
+<h4>3、BluetoothServerSocket类</h4>
+<p>&#8195;&#8195;BluetoothServerSocket是一个侦听蓝牙服务套接字。使用BluetoothServerSocket可以创建一个监听服务端口, 使用accept方法阻塞, 当该方法监测到连接的时候, 就会返回一个BluetoothSocket对象来管理这个连接。BluetoothServerSocket是线程安全的，close方法始终会立即中止正在进行的操作并关闭蓝牙服务套接字。需要BLUETOOTH权限。</p>
+<h4>（1）阻塞等待连接（无超时）</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  阻塞直到建立连接。
+ * 参数：
+ *  无
+ * 返回：
+ *  成功连接时连接的BluetoothSocket对象。
+ */
+public BluetoothSocket accept();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、一旦这个调用返回，它可以被再次调用来接受后续的传入连接。<br />
+2、close()可用于从另一个线程中止此调用。<br />
+3、发生错误时，例如该调用被中止、超时，将抛出IOException异常。  
+</p>
+</blockquote>
+<h4>（2）阻塞等待连接（有超时）</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  阻塞直到建立连接或超时。
+ * 参数：
+ *  timeout：阻塞等待的超时时间。
+ * 返回：
+ *  成功连接时连接的BluetoothSocket对象。
+ */
+public BluetoothSocket accept(int timeout);
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、一旦这个调用返回，它可以被再次调用来接受后续的传入连接。<br />
+2、close()可用于从另一个线程中止此调用。<br />
+3、发生错误时，例如该调用被中止、超时，将抛出IOException异常。  
+</p>
+</blockquote>
+<h4>（3）关闭</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  关闭该监听服务端口，并释放所有关联的资源。
+ * 参数：
+ *  无
+ * 返回：
+ *  无
+ */
+public void close();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、该方法将导致其他线程在此套接字上阻塞的调用立即引发IOException异常。<br />
+2、关闭这个端口不会关闭accept()方法返回的BluetoothSocket对象。<br />
+3、该方法调用出现问题，将抛出IOException异常。  
+</p>
+</blockquote>
+<p><br/></p>
+<h4>4、BluetoothSocket类</h4>
+<p>&#8195;&#8195;BluetoothSocket是蓝牙套接口。在服务器端，使用BluetoothServerSocket创建侦听服务器套接字。当连接被BluetoothServerSocket接受时，它将返回一个新的BluetoothSocket来管理连接。 在客户端，使用单个BluetoothSocket来启动连接并管理连接。最常见的蓝牙套接字类型是RFCOMM，它是Android API支持的类型。 RFCOMM是一种通过蓝牙实现的面向连接的流媒体传输。它也被称为串口行为规范（SPP）。BluetoothSocket是线程安全的，close方法始终会立即中止正在进行的操作并关闭套接字。需要BLUETOOTH权限。</p>
+<h4>（1）连接</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  尝试连接到远程蓝牙服务器。
+ * 参数：
+ *  无
+ * 返回：
+ *  无
+ */
+public void connect();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、此方法将阻塞，直到建立连接或连接失败。 如果此方法没有异常返回，则此套接字现在已连接。<br />
+2、该方法调用出现问题时，例如连接失败，将抛出IOException异常。  
+</p>
+</blockquote>
+<h4>（2）是否连接</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取此套接字的连接状态，即是否与远程蓝牙服务连接。
+ * 参数：
+ *  无
+ * 返回：
+ *  若连接则返回true，否则返回false。
+ */
+public boolean isConnected();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>无  
+</p>
+</blockquote>
+<h4>（3）获取远程蓝牙设备</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取此套接字连接的远程蓝牙设备。
+ * 参数：
+ *  无
+ * 返回：
+ *  连接的远程蓝牙设备BluetoothDevice对象。
+ */
+public BluetoothDevice getRemoteDevice();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>无  
+</p>
+</blockquote>
+<h4>（4）获取输入流</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取与此套接字关联的输入流。
+ * 参数：
+ *  无
+ * 返回：
+ *  输入流对象。
+ */
+public InputStream getInputStream();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、即使套接字尚未连接，输入流也会返回，但对该流的操作将抛出IOException异常，直到关联的套接字连接。<br />
+2、该方法调用出错时，将抛出IOException异常。<br />
+3、通过此方法获取的输入流对象，可以读取对端发送的数据。  
+</p>
+</blockquote>
+<h4>（5）获取输出流</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  获取与此套接字关联的输出流。
+ * 参数：
+ *  无
+ * 返回：
+ *  输出流对象。
+ */
+public OutputStream getOutputStream();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、即使套接字尚未连接，输出流也会返回，但对该流的操作将抛出IOException异常，直到关联的套接字连接。<br />
+2、该方法调用出错时，将抛出IOException异常。<br />
+3、通过此方法获取的输出流对象，可以发送数据给对端。  
+</p>
+</blockquote>
+<h4>（6）关闭</h4>
+<p>方法定义：</p>
+<pre><code>/**
+ * 作用：
+ *  关闭此流并释放与其关联的所有系统资源。如果流已经关闭，则调用此方法不起作用。
+ * 参数：
+ *  无
+ * 返回：
+ *  无
+ */
+public void close();
+</code></pre>
+
+<p>使用说明：</p>
+<blockquote>
+<p>1、该方法调用出现问题，将抛出IOException异常。  
+</p>
+</blockquote>
+<p><br/></p>
+<h2>三、经典蓝牙开发流程</h2>
+<h3>1、经典蓝牙开发流程分析</h3>
+<p><img src="./pic/3.png" /></p>
+<h3>2、蓝牙服务端实现</h3>
+<h5>(1)在工程清单文件AndroidManifest.xml中添加权限：</h5>
+<pre><code>&lt;!--如果使用了BLUETOOTH_ADMIN权限，那么必须使用BLUETOOTH权限--&gt;
+&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH_ADMIN&quot;/&gt;
+
+&lt;!--android6.0后需要搜索周边蓝牙设备，需要添加以下两个权限--&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot;/&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot;/&gt;
+
+&lt;!--要求设备硬件必须支持蓝牙--&gt;
+&lt;uses-feature android:name=&quot;android.hardware.bluetooth&quot; android:required=&quot;true&quot;/&gt;
+</code></pre>
+
+<h5>(2)获取本地蓝牙适配器：</h5>
+<pre><code>BluetoothAdapter mAdapter= BluetoothAdapter.getDefaultAdapter();
+</code></pre>
+
+<h5>(3)打开蓝牙：</h5>
+<pre><code>//方式一：通过Intent来向用户弹框请求打开蓝牙，可以重写onActivityResult来监听打开蓝牙的请求结果
+//打开蓝牙
+public void openBluetooth(){
+    if(mBluetoothAdapter==null){
+        //自定义方法，用来往TextView上添加提示信息
+        showTip(&quot;当前设备不支持蓝牙功能！&quot;);
+        return;
+    }
+
+    if(mBluetoothAdapter.isEnabled()){
+        showTip(&quot;蓝牙已打开&quot;);
+        return;
+    }
+
+    Intent intent=new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+    startActivityForResult(intent,GlobalDef.REQ_CODE_OPEN_BT);
+}
+
+@Override
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if(requestCode==GlobalDef.REQ_CODE_OPEN_BT){
+        if(resultCode == Activity.RESULT_OK){
+            showTip(&quot;蓝牙打开成功&quot;);
+        }
+        else{
+            showTip(&quot;蓝牙打开失败&quot;);
+        }
+    }
+}
+
+//方式二：通过enable方法静默打开蓝牙，无需用户同意（部分Android系统使用该方法依然会弹框提示，向用户请求打开蓝牙）
+mBluetoothAdapter.enable();
+</code></pre>
+
+<h5>(4)关闭蓝牙</h5>
+<pre><code>//关闭蓝牙，无需用户同意（部分Android系统使用该方法依然会弹框提示）
+mBluetoothAdapter.disable();
+</code></pre>
+
+<h5>(5)允许蓝牙可见：</h5>
+<pre><code>//方式一：通过Intent方式向用户请求允许蓝牙被搜索
+//注：如果蓝牙没有开启，用户点击确定后，会首先开启蓝牙，继而设置蓝牙能被扫描
+Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+//设置蓝牙可见性的时间，默认持续时间为120秒，每个请求的最长持续时间上限为300秒
+intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 120);
+startActivity(intent);
+
+//方式二：通过反射的方式来设置蓝牙可见性，且不会出现弹框
+//注：如果蓝牙没有开启，通过此方式并不会直接打开蓝牙
+/**
+ * 设置蓝牙可见
+ * @param adapter
+ * @param timeout 超时为0时，永久可见
+ */
+public static void setDiscoverableTimeout(BluetoothAdapter adapter, int timeout) {
+    //BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+    try {
+        Method setDiscoverableTimeout = BluetoothAdapter.class.getMethod(&quot;setDiscoverableTimeout&quot;, int.class);
+        setDiscoverableTimeout.setAccessible(true);
+        Method setScanMode =BluetoothAdapter.class.getMethod(&quot;setScanMode&quot;, int.class,int.class);
+        setScanMode.setAccessible(true);
+
+        setDiscoverableTimeout.invoke(adapter, timeout);
+        setScanMode.invoke(adapter, BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,timeout);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * 关闭蓝牙可见
+ * @param adapter
+ */
+public static void closeDiscoverableTimeout(BluetoothAdapter adapter) {
+    try {
+        Method setDiscoverableTimeout = BluetoothAdapter.class.getMethod(&quot;setDiscoverableTimeout&quot;, int.class);
+        setDiscoverableTimeout.setAccessible(true);
+        Method setScanMode =BluetoothAdapter.class.getMethod(&quot;setScanMode&quot;, int.class,int.class);
+        setScanMode.setAccessible(true);
+
+        setDiscoverableTimeout.invoke(adapter, 1);
+        setScanMode.invoke(adapter, BluetoothAdapter.SCAN_MODE_CONNECTABLE,1);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+</code></pre>
+
+<h5>(6)创建蓝牙服务套接字，等待其他蓝牙客户端连接：</h5>
+<pre><code>try{
+    mSocketList=new LinkedList&lt;BluetoothSocket&gt;();//用来管理连接的蓝牙套接字
+    mExecutorService= Executors.newCachedThreadPool();//创建线程池
+    //创建蓝牙服务端
+    mServerSocket=mBluetoothAdapter.listenUsingRfcommWithServiceRecord(&quot;BluetoothTool&quot;, GlobalDef.BT_UUID);
+    mServerRunningFlag=true;
+
+    showTip(&quot;蓝牙服务端成功启动&quot;);
+    new Thread(){
+        @Override
+        public void run(){
+            try{
+                BluetoothSocket socket=null;
+                //循环等待蓝牙socket连接
+                while(mServerRunningFlag){
+                    socket=mServerSocket.accept();//阻塞式
+                    mSocketList.add(socket);
+                    //SocketThread为自定义的线程类，用于管理BluetoothSocket的读写操作
+                    mExecutorService.execute(new SocketThread(socket));
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }.start();
+}catch(IOException e){
+    e.printStackTrace();
+    showTip(&quot;服务端启动出现异常&quot;);
+    Log.e(TAG,&quot;runServer IOException&quot;);
+}
+</code></pre>
+
+<h5>(7)连接成功之后，就通过获取BluetoothSocket的输入输出流进行数据传输：</h5>
+<pre><code>// 获取流
+InputStream inputStream = socket.getInputStream();
+OutputStream outputStream = socket.getOutputStream();
+// 写出、读入
+byte[] temp=new byte[1024];
+inputStream.read(temp);//当无数据时将阻塞等待
+outputStream.write(temp);
+</code></pre>
+
+<h5>(8)以下为用于操作BluetoothSocket的SocketThread的简单实现，仅供参考：</h5>
+<pre><code>class SocketThread extends Thread {
+    private BluetoothSocket mSocket=null;
+    private InputStream mIn;
+    private OutputStream mOut;
+    private boolean isOpen = false;
+
+    public SocketThread(BluetoothSocket socket) {
+        try {
+            mSocket=socket;
+            mIn = mSocket.getInputStream();
+            mOut = mSocket.getOutputStream();
+            isOpen = true;
+            Log.d(TAG, &quot;a socket thread create&quot;);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e(TAG, &quot;create SocketThread fail&quot;);
+        }
+    }
+
+    @Override
+    public void run() {
+        int readLen=0;
+        byte[] buffer=new byte[1024];
+        try{
+            while(isOpen){
+                readLen=mIn.read(buffer);
+                if(readLen&gt;0){
+                    Log.i(TAG,&quot;read data length=&quot;+readLen);
+                    Log.i(TAG,&quot;read data hex = &quot;+StringUtil.bytesToHexString(buffer,0,readLen));
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            release();
+        }
+    }
+
+    /**
+     * 写入数据
+     * @param data
+     * @param offset
+     * @param len
+     */
+    public void writeData(byte[] data,int offset,int len){
+        if (data == null || offset&lt;0 || len&lt;=0 || (len+offset)&gt;data.length) {
+            Log.e(TAG,&quot;BT writeData params fail&quot;);
+            return;
+        }
+
+        try {
+            mOut.write(data,offset,len);
+            mOut.flush();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void release(){
+        Log.d(TAG,&quot;A socketThread release&quot;);
+        try{
+            isOpen=false;
+
+            if(mOut!=null){
+                try{
+                    mOut.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                mOut=null;
+            }
+            if(mIn!=null){
+                try{
+                    mIn.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                mIn=null;
+            }
+            if(mSocket!=null){
+                try{
+                    mSocket.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                mSocket=null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+
+<h3>3、蓝牙客户端实现</h3>
+<h5>(1)添加权限，同蓝牙服务端。</h5>
+<h5>(2)获取本地蓝牙适配器，同蓝牙服务端。</h5>
+<h5>(3)打开蓝牙，同蓝牙服务端。</h5>
+<h5>(4)关闭蓝牙，同蓝牙服务端。</h5>
+<h5>(5)允许蓝牙可见，同蓝牙服务端。</h5>
+<h5>(6)定义蓝牙广播接收器，用于接收蓝牙搜索、连接状态改变等的广播：</h5>
+<pre><code>class BluetoothBroadcastReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent){
+        String action=intent.getAction();
+        Log.d(TAG,&quot;Action received is &quot;+action);
+        //蓝牙搜索
+        if(BluetoothDevice.ACTION_FOUND.equals(action)){
+            BluetoothDevice scanDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            if(scanDevice == null || scanDevice.getName() == null){
+                return;
+            }
+
+            int btType=scanDevice.getType();
+            if(btType==BluetoothDevice.DEVICE_TYPE_LE || btType==BluetoothDevice.DEVICE_TYPE_UNKNOWN){
+                return;
+            }
+
+            Log.d(TAG, &quot;bt name=&quot;+scanDevice.getName()+&quot; address=&quot;+scanDevice.getAddress());
+            //将搜索到的蓝牙设备加入列表
+            deviceList.add(scanDevice);
+            short rssi=intent.getExtras().getShort(BluetoothDevice.EXTRA_RSSI);
+            rssiList.add(rssi);
+            listAdapter.notifyDataSetChanged();//通知ListView适配器更新
+        }
+        //蓝牙配对
+        else if(BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)){
+            BluetoothDevice btDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            if(mCurDevice!=null &amp;&amp; btDevice.getAddress().equals(mCurDevice.getAddress())){
+                int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1);
+                if(state==BluetoothDevice.BOND_NONE){
+                    showTip(&quot;已取消与设备&quot; + btDevice.getName() + &quot;的配对&quot;);
+                    mFlag=-1;
+                }
+                else if(state==BluetoothDevice.BOND_BONDED){
+                    showTip(&quot;与设备&quot; + btDevice.getName() + &quot;配对成功&quot;);
+                    mFlag=1;
+                }
+            }
+        }
+        else if(BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)){
+            int blueState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, 0);
+            switch (blueState) {
+                case BluetoothAdapter.STATE_TURNING_ON:
+                    Log.i(TAG,&quot;onReceive---------STATE_TURNING_ON&quot;);
+                    break;
+                case BluetoothAdapter.STATE_ON:
+                    Log.i(TAG,&quot;onReceive---------STATE_ON&quot;);
+                    showTip(&quot;蓝牙当前状态：ON&quot;);
+                    break;
+                case BluetoothAdapter.STATE_TURNING_OFF:
+                    Log.i(TAG,&quot;onReceive---------STATE_TURNING_OFF&quot;);
+                    break;
+                case BluetoothAdapter.STATE_OFF:
+                    Log.i(TAG,&quot;onReceive---------STATE_OFF&quot;);
+                    showTip(&quot;蓝牙当前状态：OFF&quot;);
+                    break;
+            }
+        }
+    }
+}
+</code></pre>
+
+<h5>(7)注册广播：</h5>
+<pre><code>    mBluetoothBroadcastReceiver=new BluetoothBroadcastReceiver();
+    IntentFilter filter=new IntentFilter();
+    filter.addAction(BluetoothDevice.ACTION_FOUND);
+    filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+    filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+    mContext.registerReceiver(mBluetoothBroadcastReceiver,filter);
+</code></pre>
+
+<h5>(8)搜索周边蓝牙设备：</h5>
+<pre><code>    if(mBluetoothAdapter.isDiscovering()){
+        mBluetoothAdapter.cancelDiscovery();
+    }
+    //搜索到的蓝牙设备通过广播接收
+    mBluetoothAdapter.startDiscovery();
+</code></pre>
+
+<h5>(9)建立与蓝牙服务器的连接：</h5>
+<pre><code>/**
+ * 蓝牙配对并连接
+ */
+public void bondAndConnect(BluetoothDevice mCurDevice){
+    //取消搜索
+    if(mBluetoothAdapter.isDiscovering()){
+        mBluetoothAdapter.cancelDiscovery();
+    }
+
+    if(mCurDevice==null){
+        showTip(&quot;远程蓝牙设备为空！&quot;);
+        return;
+    }
+
+    //当前蓝牙设备未配对，则先进行配对
+    if(mCurDevice.getBondState()==BluetoothDevice.BOND_NONE){
+        Log.d(TAG,&quot;create bond to &quot;+mCurDevice.getName());
+        boolean nRet= BluetoothUtil.createBond(mCurDevice);
+        if(!nRet){
+            showTip(&quot;createBond fail！&quot;);
+            return;
+        }
+        showLoadingDialog(&quot;正在与【&quot;+mCurDevice.getName()+&quot;】进行配对...&quot;);
+        mFlag=0;
+        while(mFlag==0){
+            SystemClock.sleep(250);
+        }
+        if(mFlag==-1){
+            showTip(&quot;与【&quot;+mCurDevice.getName()+&quot;】的蓝牙配对失败&quot;);
+            dismissLoadingDialog();
+            return;
+        }
+    }
+
+    if(mCurDevice.getBondState()==BluetoothDevice.BOND_BONDED){
+        showLoadingDialog(&quot;正在与【&quot;+mCurDevice.getName()+&quot;】进行连接...&quot;);
+        try {
+            //创建Socket
+            BluetoothSocket socket = mCurDevice.createRfcommSocketToServiceRecord(GlobalDef.BT_UUID);
+            //连接蓝牙服务套接字
+            socket.connect();
+            mThread=new SocketThread(socket);
+            mThread.start();
+            showTip((&quot;成功与【&quot;+mCurDevice.getName()+&quot;】建立连接&quot;));
+        } catch (IOException e) {
+            Log.d(TAG,&quot;socket connect fail&quot;);
+            showTip((&quot;连接【&quot;+mCurDevice.getName()+&quot;】失败&quot;));
+            e.printStackTrace();
+        }
+    }
+    dismissLoadingDialog();
+}
+</code></pre>
+
+<h5>(10)连接成功之后，就通过输入输出流进行数据传输，同蓝牙服务端。</h5>
+<p><br/></p>
+<h2>四、注意事项与常见问题</h2>
+<h5>1、Android6.0以后，搜索蓝牙设备需要位置权限（危险权限，需要动态申请）。</h5>
+<h5>2、高版本Android系统上进行蓝牙搜索时，除了动态申请位置权限外，有的可能还需要手动打开设备的位置信息，否则无法搜索蓝牙。</h5>
+<p><img src="./pic/4.png" /></p>
+<h5>3、搜索周边蓝牙设备时，本机并不需要处于蓝牙可见状态。但其他设备必须处于蓝牙可见状态，本机才可以搜索到。已知蓝牙设备（处于有效范围内）的MAC地址，则随时可以向其发起连接，而无需打开蓝牙可见性。</h5>
+<h5>4、如果尚未在设备上启用蓝牙，则启用设备可检测性将会自动启用蓝牙。</h5>
+<h5>5、搜索周边设备对于蓝牙适配器而言是一个非常繁重的操作过程，并且会消耗大量资源。在找到要连接的设备后，确保始终使用 cancelDiscovery() 停止发现，然后再尝试连接。 此外，如果已经保持与某台设备的连接，那么执行搜索操作可能会大幅减少可用于该连接的带宽，因此不应该在处于连接状态时执行搜索周边蓝牙的操作。</h5>
+<h5>6、在调用 connect() 时，应始终确保设备未在进行搜索操作。 如果正在进行搜索操作，则会大幅降低连接尝试的速度，并增加连接失败的可能性。</h5>
+<h5>7、搜索周边设备，通过广播能够获取到周边蓝牙设备的名称、mac地址、rssi信号强度等。</h5>
+<h5>8、BluetoothSocket是线程安全的, close()方法会终止BluetoothSocket进行的一切操作, 并且同时会关闭连接。</h5>
+<h5>9、经典蓝牙是通过流来进行数据收发的，对流进行数据读取操作时，由于接收方不知道消息之间的界限，不知道一次性提取多少字节的数据，因而容易产生数据粘包问题。对于这种问题，可以给每个完整的数据包添加一个起始符与结束符，那么接收方就可以确定需要读取并处理的数据范围。</h5>
+<p><br/></p>
+<h2>五、附录</h2>
+<ol>
+<li><a href="https://blog.csdn.net/androidstarjack/article/details/60468468" title="深入了解Android蓝牙Bluetooth——《基础篇》">深入了解Android蓝牙Bluetooth——《基础篇》</a></li>
+<li><a href="https://blog.csdn.net/jdfkldjlkjdl/article/details/84637354" title="Android 经典蓝牙开发">Android 经典蓝牙开发</a></li>
+<li><a href="https://blog.csdn.net/zqf_888/article/details/81060606" title="Android蓝牙开发—经典蓝牙详细开发流程">Android蓝牙开发—经典蓝牙详细开发流程</a>  </li>
+<li><a href="https://developer.android.google.cn/guide/topics/connectivity/bluetooth" title="蓝牙概览">蓝牙概览</a></li>
+</ol>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
